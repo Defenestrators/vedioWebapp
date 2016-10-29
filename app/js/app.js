@@ -5,7 +5,7 @@ sinchClient = new SinchClient({
     capabilities: {calling: true, video: true},
     supportActiveConnection: true,
     onLogMessage: function(message) {
-        console.log(message.message);
+        console.log(message);
     },
 });
 var callClient;
@@ -25,10 +25,20 @@ $("#signup").on("click", function (event) {
     var signUpObj = {};
     signUpObj.username = $("input#username").val();
     signUpObj.password = $("input#password").val();
-
+    console.log(signUpObj);
+    /*sinchClient.start(signUpObj, function() {
+      console.log('sucess')
+    }, function() {
+      console.log('fail');
+    })
     sinchClient.newUser(signUpObj, function(ticket) {
+      console.log(ticket);
         sinchClient.start(ticket, afterStartSinchClient());
-    });
+    });*/
+    sinchClient.newUser(signUpObj)
+      .then(sinchClient.start.bind(sinchClient))
+      .then(() => console.log('hello'))
+      .fail(() => console.log('goodbye'))
 });
 
 function afterStartSinchClient() {
@@ -43,6 +53,7 @@ function afterStartSinchClient() {
     //initialize media streams, asks for microphone & video permission
     callClient.initStream();
     //what to do when there is an incoming call
+    console.log('incomingCallListener'.incomingCallListener);
     callClient.addEventListener(incomingCallListener);
 }
 var incomingCallListener = {
@@ -96,6 +107,4 @@ $("#hangup").click(function(event) {
         call = null
     }
 });
-
-
 });

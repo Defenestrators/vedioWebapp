@@ -16,36 +16,39 @@ $("#login").on("click", function (event) {
     var signUpObj = {};
     signUpObj.username = $("input#username").val();
     signUpObj.password = $("input#password").val();
-    sinchClient.start(signUpObj, afterStartSinchClient());
+    sinchClient.start(signUpObj, afterStartSinchClient(signUpObj));
+});
+
+$("#directsignup").on('click',function(event){
+  event.preventDefault();
+  $("form#authForm").css("display", "none");
+  $("form#createsignup").css("display", "inline");
 });
 
 $("#signup").on("click", function (event) {
     event.preventDefault();
 
     var signUpObj = {};
-    signUpObj.username = $("input#username").val();
-    signUpObj.password = $("input#password").val();
+    signUpObj.username = $("input#createsername").val();
+    signUpObj.password = $("input#createpassword").val();
     console.log(signUpObj);
-    /*sinchClient.start(signUpObj, function() {
-      console.log('sucess')
-    }, function() {
-      console.log('fail');
-    })
-    sinchClient.newUser(signUpObj, function(ticket) {
-      console.log(ticket);
-        sinchClient.start(ticket, afterStartSinchClient());
-    });*/
+    $("form#createsignup").css("display", "none");
+    $("form#authForm").css("display", "inline");
     sinchClient.newUser(signUpObj)
       .then(sinchClient.start.bind(sinchClient))
       .then(() => console.log('hello'))
       .fail(() => console.log('goodbye'))
 });
 
-function afterStartSinchClient() {
+function afterStartSinchClient(currentObj) {
     // hide auth form
     $("form#authForm").css("display", "none");
+    $("form#createsignup").css("display", "none");
     // show logged-in view
     $("div#sinch").css("display", "inline");
+
+    console.log(currentObj);
+    $('div#sinch').prepend('<p>Welcome! '+currentObj.username+'</p>');
     // start listening for incoming calls
     sinchClient.startActiveConnection();
     // define call client (to handle incoming/outgoing calls)

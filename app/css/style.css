@@ -6,6 +6,9 @@ body{
   color: #00b2bd;
 }
 
+ul.social-buttons li a {
+  background-color: #00b2bd;
+}
 /*.navbar {
   background-color: white;
   border: 0;

@@ -1,8 +1,28 @@
 body{
-  padding: 2%
+  padding: 2%;
+  color: #00b2bd;
+}
+.intro-heading{
+  color: #00b2bd;
 }
 
-.navbar {
+/*.navbar {
   background-color: white;
   border: 0;
 }
+
+.navbar, .navbar a {
+  color: #00b2bd;
+}*/
+
+#bs-example-navbar-collapse-1 a {
+  color: #00b2bd;
+}
+
+.page-scroll btn btn-xl a:hover{
+  color: red;
+}
+/*#mainNav .container{
+  width: 30%;
+
+}*/
